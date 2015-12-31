@@ -52,12 +52,12 @@ public class PropertiesFileConfigurationPlugin extends PlayPlugin {
 
             try {
                 if (propertiesFileAbsolutePath != null && propertiesFileAbsolutePath.length() > 0) {
-                    if (propertiesFilename.startsWith("/") || propertiesFilename.startsWith("/")) {
+                    if (propertiesFilename.startsWith("/")) {
                         propertiesFilename = propertiesFilename.substring(1);
-                    } else if (propertiesFilename.startsWith("~")) {
-                        propertiesFilename = propertiesFilename.replaceFirst("~", System.getenv("user.home"));
+                        propertiesFilenameAndPath = propertiesFileAbsolutePath + SEPARATOR + propertiesFilename;
+                    } else if (propertiesFilename.startsWith("~/")) {
+                        propertiesFilenameAndPath = propertiesFilename.replaceFirst("~", System.getenv("user.home"));
                     }
-                    propertiesFilenameAndPath = propertiesFileAbsolutePath + SEPARATOR + propertiesFilename;
                     is = new FileInputStream(propertiesFilenameAndPath);
                 } else {
                     is = this.getClass().getResourceAsStream(propertiesFilename);
